@@ -1,61 +1,34 @@
 extends CharacterBody2D
-#const SPEED = 200
+
 var is_dragging:bool = false
 var draggable:bool = false
+var direction := Vector2.ZERO
+var speed:int = 1
 
-var vec_start:Vector2
-var vec_fin:Vector2
-@onready var line = $Line2D
+var initial_position:Vector2
+var dragged_position:Vector2
+@onready var guide_line = get_parent().get_node("GuideLine")
 
-
-func _ready() -> void:
-	print(position)
-	pass # Replace with function body.
-
-
-func _process(delta: float) -> void:
-	#print(velocity)
-
-	
-	pass
-
-func _physics_process(delta: float) -> void:
-#	var input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-#	if input.length() > 0:
-#		velocity = input * SPEED
-#	else:
-#		velocity = velocity.move_toward(Vector2.ZERO, SPEED)
-#	move_and_slide()
-	pass
+func _physics_process(delta):
+	velocity = direction
+	move_and_slide()
 
 
-func _on_mouse_entered() -> void:
-	if not is_dragging:
-		scale = Vector2(1.03,1.03)
-	pass # Replace with function body.
-
-
-func _on_mouse_exited() -> void:
-	if not is_dragging:
-		scale = Vector2(1,1)
-	
-	pass # Replace with function body.
-
-
-func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_input_event(viewport, event, shape_idx):
 	if Input.is_action_just_pressed("click"):
-		vec_start = position
-		print(vec_start)
-		#vec_fin = vec_start
-		line.points[0] = to_local(vec_start)
-
+		initial_position = position
+		direction = Vector2.ZERO
+		dragged_position = initial_position
+		guide_line.points[0] = initial_position
 
 	if Input.is_action_pressed("click"):
-		global_position = get_global_mouse_position()
-		vec_fin = global_position
-		line.points[1] = to_local(vec_fin)
-		
-		pass
+		position = get_global_mouse_position()
+		dragged_position = position
+		guide_line.points[1] = dragged_position
 	
 	if Input.is_action_just_released("click"):
-		print(vec_start)
+		var pull_length = initial_position.distance_to(dragged_position)
+		print("Pull length: ", pull_length)
+		guide_line.points[0] = Vector2.ZERO
+		guide_line.points[1] = Vector2.ZERO
+		direction = ((initial_position - dragged_position))

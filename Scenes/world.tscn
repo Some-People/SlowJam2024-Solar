@@ -1,4 +1,11 @@
-[gd_scene format=3 uid="uid://dsqwaapklf4xb"]
+[gd_scene load_steps=3 format=3 uid="uid://dsqwaapklf4xb"]
+
+[ext_resource type="PackedScene" uid="uid://okwicdpcvlpt" path="res://Scenes/Player.tscn" id="1_myq71"]
+[ext_resource type="PackedScene" uid="uid://db07jp0f3kmvu" path="res://Scenes/guide_line.tscn" id="2_ce8vm"]
 
 [node name="World" type="Node2D"]
-visible = false
+
+[node name="Player" parent="." instance=ExtResource("1_myq71")]
+position = Vector2(211, 215)
+
+[node name="GuideLine" parent="." instance=ExtResource("2_ce8vm")]
