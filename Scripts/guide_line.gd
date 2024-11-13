@@ -1,2 +1,5 @@
 extends Line2D
-@onready var guide_line = get_parent().get_node("Player")
+@onready var player = get_parent().get_node("Player")
+
+func _process(delta: float) -> void:
+	$GuideArea.position = points[0]

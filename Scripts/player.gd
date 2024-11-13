@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var MINSTOP = Vector2(.5,.5)
+
 var is_dragging:bool = false
 var draggable:bool = false
 var direction := Vector2.ZERO
@@ -7,15 +9,20 @@ var speed:int = 1
 
 var initial_position:Vector2
 var dragged_position:Vector2
+
 @onready var guide_line = get_parent().get_node("GuideLine")
 
 func _physics_process(delta):
 	velocity = direction
+	direction = lerp(direction, Vector2.ZERO, 0.035)
+
+		
 	move_and_slide()
 
 
 func _on_input_event(viewport, event, shape_idx):
 	if Input.is_action_just_pressed("click"):
+
 		initial_position = position
 		direction = Vector2.ZERO
 		dragged_position = initial_position
@@ -31,4 +38,6 @@ func _on_input_event(viewport, event, shape_idx):
 		print("Pull length: ", pull_length)
 		guide_line.points[0] = Vector2.ZERO
 		guide_line.points[1] = Vector2.ZERO
-		direction = ((initial_position - dragged_position))
+		direction = ((initial_position - dragged_position)*5)
+		
+		

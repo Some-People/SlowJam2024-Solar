@@ -1,11 +1,35 @@
-[gd_scene load_steps=3 format=3 uid="uid://dsqwaapklf4xb"]
+[gd_scene load_steps=6 format=3 uid="uid://dsqwaapklf4xb"]
 
 [ext_resource type="PackedScene" uid="uid://okwicdpcvlpt" path="res://Scenes/Player.tscn" id="1_myq71"]
+[ext_resource type="Texture2D" uid="uid://b3i6j6mwe6iu6" path="res://Assets/Img/icon.svg" id="1_wqo3l"]
 [ext_resource type="PackedScene" uid="uid://db07jp0f3kmvu" path="res://Scenes/guide_line.tscn" id="2_ce8vm"]
+[ext_resource type="Script" path="res://Scripts/player_camera.gd" id="3_n7g6t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8wk3s"]
 
 [node name="World" type="Node2D"]
+
+[node name="CollisionShape2D" type="Sprite2D" parent="."]
+modulate = Color(0.994842, 0.807514, 0.298608, 1)
+position = Vector2(483, 313)
+rotation = -3.13287
+scale = Vector2(24.1515, 15.6976)
+texture = ExtResource("1_wqo3l")
 
 [node name="Player" parent="." instance=ExtResource("1_myq71")]
 position = Vector2(211, 215)
 
+[node name="PlayerCamera" type="Camera2D" parent="."]
+position = Vector2(211, 215)
+position_smoothing_enabled = true
+script = ExtResource("3_n7g6t")
+
 [node name="GuideLine" parent="." instance=ExtResource("2_ce8vm")]
+
+[node name="GuideArea" type="Area2D" parent="GuideLine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GuideLine/GuideArea"]
+scale = Vector2(30, 30)
+shape = SubResource("CircleShape2D_8wk3s")
+
+[connection signal="input_event" from="Player" to="PlayerCamera" method="_on_player_input_event"]
