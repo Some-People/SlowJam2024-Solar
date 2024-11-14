@@ -1,12 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dsqwaapklf4xb"]
+[gd_scene load_steps=7 format=3 uid="uid://dsqwaapklf4xb"]
 
 [ext_resource type="PackedScene" uid="uid://okwicdpcvlpt" path="res://Scenes/Player.tscn" id="1_myq71"]
 [ext_resource type="Texture2D" uid="uid://b3i6j6mwe6iu6" path="res://Assets/Img/icon.svg" id="1_wqo3l"]
 [ext_resource type="PackedScene" uid="uid://db07jp0f3kmvu" path="res://Scenes/guide_line.tscn" id="2_ce8vm"]
 [ext_resource type="Script" path="res://Scripts/player_camera.gd" id="3_n7g6t"]
 [ext_resource type="Script" path="res://Scripts/dev_screen.gd" id="5_2bnsw"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_8wk3s"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_qjlle"]
 
@@ -30,13 +28,6 @@ script = ExtResource("3_n7g6t")
 
 [node name="GuideLine" parent="." instance=ExtResource("2_ce8vm")]
 
-[node name="GuideArea" type="Area2D" parent="GuideLine"]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GuideLine/GuideArea"]
-scale = Vector2(30, 30)
-shape = SubResource("CircleShape2D_8wk3s")
-
 [node name="DevScreen" type="CanvasLayer" parent="."]
 script = ExtResource("5_2bnsw")
 
@@ -58,6 +49,7 @@ label_settings = SubResource("LabelSettings_qjlle")
 uppercase = true
 
 [node name="Velocity_Header" type="Label" parent="DevScreen/Velocity"]
+layout_mode = 0
 offset_left = -37.0
 offset_top = -31.0
 offset_right = 102.0
@@ -74,6 +66,7 @@ text = "test"
 uppercase = true
 
 [node name="Draggable_Header" type="Label" parent="DevScreen/Draggable"]
+layout_mode = 0
 offset_left = 2.0
 offset_top = -27.0
 offset_right = 99.0

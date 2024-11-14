@@ -20,6 +20,14 @@ texture = ExtResource("2_8e0wk")
 scale = Vector2(5.96, 5.96)
 shape = SubResource("CircleShape2D_iuucy")
 
+[node name="Label" type="Label" parent="PlayerCollisionShape"]
+offset_left = 70.6376
+offset_top = -1.84564
+offset_right = 228.638
+offset_bottom = 21.1544
+scale = Vector2(0.157442, 0.157442)
+text = "Maximum Boundary"
+
 [node name="MinimumClickArea" type="Area2D" parent="."]
 
 [node name="MinimumClickShape" type="CollisionShape2D" parent="MinimumClickArea"]
@@ -27,7 +35,6 @@ scale = Vector2(7.16, 7.16)
 shape = SubResource("CircleShape2D_8mhot")
 debug_color = Color(0.689711, 0.407193, 0.746194, 0.42)
 
-[connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="input_event" from="MinimumClickArea" to="." method="_on_minimum_click_area_input_event"]

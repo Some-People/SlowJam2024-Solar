@@ -3,7 +3,6 @@ extends CharacterBody2D
 @export var release_speed:int = 5
 @export var damper = 0.035
 
-var is_dragging:bool = false
 var draggable:bool = false
 var direction := Vector2.ZERO
 
@@ -17,7 +16,7 @@ var pull_length
 @onready var guide_line = get_parent().get_node("GuideLine")
 
 func _physics_process(delta):
-
+##Slingshot movement inputs
 	if Input.is_action_pressed("click"):
 		if draggable:
 			if !max_pull:
@@ -35,34 +34,36 @@ func _physics_process(delta):
 			guide_line.points[1] = Vector2.ZERO
 			max_pull_pos = Vector2.ZERO
 			direction = ((initial_position - dragged_position)*release_speed)
-
+			print(direction)
+##Movement execution
 	velocity = direction
 	direction = lerp(direction, Vector2.ZERO, damper)
 	move_and_slide()
-	
-func _process(delta: float) -> void:
-	pass
-
-func _on_input_event(viewport, event, shape_idx):
-	pass
 
 func _on_minimum_click_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+##Slingshot movement input 
+#Ensures that you can only start slingshot from the player
 	if Input.is_action_just_pressed("click"):
-		pull_length = initial_position.distance_to(dragged_position)
-		direction = Vector2.ZERO
-		initial_position = position
-		guide_line.points[0] = initial_position
+		if draggable:
+			pull_length = initial_position.distance_to(dragged_position)
+			direction = Vector2.ZERO
+			initial_position = position
+			guide_line.points[0] = initial_position
+		elif !draggable:
+			pass
 
 func _on_mouse_entered() -> void:
+#Resets Max Pull Range Variable
 	max_pull = false
 
 func _on_mouse_exited() -> void:
+##Max Slingshot Pul Range
+#Grabs the coords of mouse when leaving the slingshot aim boundary
 	max_pull = true
 	max_pull_pos = get_global_mouse_position()
 
 func _on_minimum_click_area_mouse_entered() -> void:
 	draggable = true
-
 
 func _on_minimum_click_area_mouse_exited() -> void:
 	if !Input.is_action_pressed("click"):
