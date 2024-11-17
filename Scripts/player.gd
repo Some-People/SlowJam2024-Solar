@@ -19,8 +19,15 @@ var pull_length
 @onready var health_bar = get_parent().get_node("UI/HealthBar")
 
 func _physics_process(delta):
-##Slingshot movement inputs
+	if direction > Vector2.ZERO:
+		$PlayerSprite.rotation_degrees +=5
+	elif direction <= Vector2.ZERO:
+		$PlayerSprite.rotation_degrees = 0
+		pass
+	
 	health_bar.value = health_bar.value-life_loss_rate
+
+##Slingshot movement inputs
 	if Input.is_action_pressed("click"):
 		if draggable:
 			if !max_pull:
