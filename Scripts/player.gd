@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var release_speed:int = 5
-@export var damper = 0.035
+@export var movement_damper = 0.035
 
 var draggable:bool = false
 var direction := Vector2.ZERO
@@ -13,10 +13,14 @@ var initial_position:Vector2
 var dragged_position:Vector2
 var pull_length
 
+@export var life_loss_rate = .01
+
 @onready var guide_line = get_parent().get_node("GuideLine")
+@onready var health_bar = get_parent().get_node("UI/HealthBar")
 
 func _physics_process(delta):
 ##Slingshot movement inputs
+	health_bar.value = health_bar.value-life_loss_rate
 	if Input.is_action_pressed("click"):
 		if draggable:
 			if !max_pull:
@@ -34,10 +38,10 @@ func _physics_process(delta):
 			guide_line.points[1] = Vector2.ZERO
 			max_pull_pos = Vector2.ZERO
 			direction = ((initial_position - dragged_position)*release_speed)
-			print(direction)
+			print(health_bar.value)
 ##Movement execution
 	velocity = direction
-	direction = lerp(direction, Vector2.ZERO, damper)
+	direction = lerp(direction, Vector2.ZERO, movement_damper)
 	move_and_slide()
 
 func _on_minimum_click_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:

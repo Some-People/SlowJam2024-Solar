@@ -1,12 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://dsqwaapklf4xb"]
+[gd_scene load_steps=9 format=3 uid="uid://dsqwaapklf4xb"]
 
 [ext_resource type="PackedScene" uid="uid://okwicdpcvlpt" path="res://Scenes/Player.tscn" id="1_myq71"]
 [ext_resource type="Texture2D" uid="uid://b3i6j6mwe6iu6" path="res://Assets/Img/icon.svg" id="1_wqo3l"]
 [ext_resource type="PackedScene" uid="uid://db07jp0f3kmvu" path="res://Scenes/guide_line.tscn" id="2_ce8vm"]
 [ext_resource type="Script" path="res://Scripts/player_camera.gd" id="3_n7g6t"]
 [ext_resource type="Script" path="res://Scripts/dev_screen.gd" id="5_2bnsw"]
+[ext_resource type="PackedScene" uid="uid://cperj1xaejq82" path="res://Scenes/sun_drop.tscn" id="6_idpla"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_qjlle"]
+
+[sub_resource type="Theme" id="Theme_wbdsu"]
 
 [node name="World" type="Node2D"]
 
@@ -20,6 +23,7 @@ texture = ExtResource("1_wqo3l")
 [node name="Player" parent="." instance=ExtResource("1_myq71")]
 position = Vector2(211, 215)
 disable_mode = 2
+life_loss_rate = 0.05
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
 position = Vector2(211, 215)
@@ -72,5 +76,21 @@ offset_top = -27.0
 offset_right = 99.0
 offset_bottom = -4.0
 text = "is_draggable:"
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="UI"]
+offset_left = 521.0
+offset_top = 553.0
+offset_right = 525.0
+offset_bottom = 580.0
+theme = SubResource("Theme_wbdsu")
+value = 100.0
+fill_mode = 1
+
+[node name="SunDropHandler" type="Node2D" parent="."]
+
+[node name="SunDrop" parent="SunDropHandler" instance=ExtResource("6_idpla")]
+position = Vector2(574, 372)
 
 [connection signal="pressed" from="DevScreen/ResetCharPos" to="DevScreen" method="_on_reset_char_pos_pressed"]

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cperj1xaejq82"]
+
+[ext_resource type="Script" path="res://Scripts/sun_drop.gd" id="1_0ojvs"]
+[ext_resource type="Texture2D" uid="uid://b3i6j6mwe6iu6" path="res://Assets/Img/icon.svg" id="2_8mju1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j8wmk"]
+
+[node name="SunDrop" type="Node2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_0ojvs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.650509, 0.53077, 0.357113, 1)
+self_modulate = Color(47.568, 13.514, 0, 1)
+texture = ExtResource("2_8mju1")
+
+[node name="SunDropCollision" type="Area2D" parent="."]
+scale = Vector2(0.28, 0.28)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SunDropCollision"]
+scale = Vector2(29.5429, 29.5429)
+shape = SubResource("CircleShape2D_j8wmk")
+debug_color = Color(0.574648, 0.553305, 0.0765855, 0.42)
+
+[connection signal="area_entered" from="SunDropCollision" to="." method="_on_sun_drop_collision_area_entered"]
