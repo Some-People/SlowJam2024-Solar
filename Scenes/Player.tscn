@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://okwicdpcvlpt"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_wxdwb"]
-[ext_resource type="Texture2D" uid="uid://b3i6j6mwe6iu6" path="res://Assets/Img/icon.svg" id="2_8e0wk"]
+[ext_resource type="Texture2D" uid="uid://denkpu6ccp00e" path="res://Assets/Img/player-lv1.png" id="2_uvyuq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iuucy"]
 radius = 70.0
@@ -14,10 +14,10 @@ motion_mode = 1
 script = ExtResource("1_wxdwb")
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_8e0wk")
+texture = ExtResource("2_uvyuq")
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
-scale = Vector2(5.96, 5.96)
+scale = Vector2(1.32, 1.32)
 shape = SubResource("CircleShape2D_iuucy")
 
 [node name="Label" type="Label" parent="PlayerCollisionShape"]
@@ -31,7 +31,7 @@ text = "Maximum Boundary"
 [node name="MinimumClickArea" type="Area2D" parent="."]
 
 [node name="MinimumClickShape" type="CollisionShape2D" parent="MinimumClickArea"]
-scale = Vector2(7.16, 7.16)
+scale = Vector2(1.8, 1.8)
 shape = SubResource("CircleShape2D_8mhot")
 debug_color = Color(0.689711, 0.407193, 0.746194, 0.42)
 

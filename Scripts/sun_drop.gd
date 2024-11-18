@@ -4,7 +4,7 @@ extends Node2D
 
 
 @onready var player = get_parent().get_parent().get_node("Player")
-@onready var health_bar = get_parent().get_parent().get_node("UI/HealthBar")
+@onready var health_bar = get_parent().get_parent().get_node("UI/HealthProgBar")
 
 func _on_sun_drop_collision_area_entered(area):
 	health_bar.value = health_bar.value + 10

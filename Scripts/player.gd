@@ -13,19 +13,14 @@ var initial_position:Vector2
 var dragged_position:Vector2
 var pull_length
 
-@export var life_loss_rate = .01
+@export var life_loss_rate = .05
 
 @onready var guide_line = get_parent().get_node("GuideLine")
-@onready var health_bar = get_parent().get_node("UI/HealthBar")
+@onready var health_bar = get_parent().get_node("UI/HealthProgBar")
 
 func _physics_process(delta):
-	if direction > Vector2.ZERO:
-		$PlayerSprite.rotation_degrees +=5
-	elif direction <= Vector2.ZERO:
-		$PlayerSprite.rotation_degrees = 0
-		pass
-	
 	health_bar.value = health_bar.value-life_loss_rate
+	print(health_bar.value)
 
 ##Slingshot movement inputs
 	if Input.is_action_pressed("click"):
