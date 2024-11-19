@@ -20,7 +20,7 @@ var pull_length
 
 func _physics_process(delta):
 	health_bar.value = health_bar.value-life_loss_rate
-	print(health_bar.value)
+	#print(health_bar.value)
 
 ##Slingshot movement inputs
 	if Input.is_action_pressed("click"):
