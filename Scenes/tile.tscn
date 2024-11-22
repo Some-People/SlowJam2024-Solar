@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddmyrc5k0ki7s"]
+
+[ext_resource type="Texture2D" uid="uid://jqdfnyw3jme0" path="res://Assets/Img/background-lineart.png" id="1_6mwuv"]
+
+[node name="Tile" type="Node2D"]
+scale = Vector2(8, 8)
+
+[node name="BG-Tile" type="Sprite2D" parent="."]
+texture = ExtResource("1_6mwuv")
