@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://dsqwaapklf4xb"]
+[gd_scene load_steps=24 format=4 uid="uid://dsqwaapklf4xb"]
 
 [ext_resource type="Script" path="res://Scripts/tile_handler.gd" id="1_4u1rf"]
 [ext_resource type="PackedScene" uid="uid://okwicdpcvlpt" path="res://Scenes/Player.tscn" id="1_myq71"]
@@ -16,17 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://11ywkr3w1pmy" path="res://Assets/Screenshot 2024-11-17 182659.png" id="13_nx2tv"]
 [ext_resource type="Texture2D" uid="uid://bgvw7nbndubis" path="res://Assets/Img/solarprojbg.png" id="14_yue5p"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lhhuj"]
-size = Vector2(22.1051, 3.22591)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1jvo4"]
-size = Vector2(22.105, 3.226)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_13bie"]
-size = Vector2(47.3449, 4.67894)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eiqdm"]
-size = Vector2(47.345, 4.679)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ed05f"]
+size = Vector2(19.8822, 19.7835)
 
 [sub_resource type="LabelSettings" id="LabelSettings_qjlle"]
 
@@ -87,56 +78,27 @@ position = Vector2(0, 1240)
 [node name="Tile9" parent="TileHandler" instance=ExtResource("2_bg4f2")]
 position = Vector2(2208, 1240)
 
-[node name="LeftBorder" type="Area2D" parent="TileHandler"]
-position = Vector2(-963, 0)
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileHandler/LeftBorder"]
-rotation = -1.5708
-scale = Vector2(48.8575, 1.81607)
-shape = SubResource("RectangleShape2D_lhhuj")
-debug_color = Color(0.296439, 0.616694, 0.359382, 0.42)
-
-[node name="RightBorder" type="Area2D" parent="TileHandler"]
-position = Vector2(963, 0)
-rotation = 1.5708
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileHandler/RightBorder"]
-scale = Vector2(48.858, 1.816)
-shape = SubResource("RectangleShape2D_1jvo4")
-
-[node name="BottomBorder" type="Area2D" parent="TileHandler"]
-position = Vector2(0, 543)
+[node name="TilingBorder" type="Area2D" parent="TileHandler"]
 collision_layer = 2
 collision_mask = 2
-monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileHandler/BottomBorder"]
-scale = Vector2(40.8492, -1.31553)
-shape = SubResource("RectangleShape2D_13bie")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileHandler/TilingBorder"]
+scale = Vector2(96.5688, 54.5909)
+shape = SubResource("RectangleShape2D_ed05f")
+debug_color = Color(0.998753, 0, 0.133554, 0.42)
 
-[node name="TopBorder" type="Area2D" parent="TileHandler"]
-position = Vector2(0, -543)
-collision_layer = 2
-collision_mask = 2
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileHandler/TopBorder"]
-position = Vector2(-2, -1.06581e-14)
-rotation = -3.14159
-scale = Vector2(40.849, -1.316)
-shape = SubResource("RectangleShape2D_eiqdm")
+[node name="ExitTimer" type="Timer" parent="TileHandler"]
+wait_time = 0.1
+one_shot = true
 
 [node name="Player" parent="." instance=ExtResource("1_myq71")]
-position = Vector2(7, -14)
 disable_mode = 2
 collision_layer = 3
 collision_mask = 3
+drag_radius = 370
 
 [node name="GuideLine" parent="." instance=ExtResource("2_ce8vm")]
-width = 1.0
-default_color = Color(0, 1, 1, 0.509804)
+default_color = Color(0.994312, 2.83009e-05, 0.693155, 1)
 
 [node name="DevScreen" type="CanvasLayer" parent="."]
 layer = 2
@@ -236,6 +198,7 @@ position = Vector2(187, 447)
 position = Vector2(447, 440)
 
 [node name="ShaderLayer1" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="HorizontalDownscale" type="ColorRect" parent="ShaderLayer1"]
 material = SubResource("ShaderMaterial_s825x")
@@ -248,6 +211,7 @@ mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ShaderLayer2" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="VerticalDownscale" type="ColorRect" parent="ShaderLayer2"]
 material = SubResource("ShaderMaterial_isufk")
@@ -260,6 +224,7 @@ mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ShaderLayer3" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Quantize" type="ColorRect" parent="ShaderLayer3"]
 visible = false
@@ -301,12 +266,11 @@ tile_set = SubResource("TileSet_bwknh")
 script = ExtResource("3_n7g6t")
 
 [node name="PlayerCamera" type="Camera2D" parent="CameraContainer"]
+zoom = Vector2(0.4, 0.4)
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
-[connection signal="body_entered" from="TileHandler/BottomBorder" to="TileHandler" method="_on_bottom_border_body_entered"]
-[connection signal="body_exited" from="TileHandler/BottomBorder" to="TileHandler" method="_on_bottom_border_body_exited"]
-[connection signal="area_entered" from="TileHandler/TopBorder" to="TileHandler" method="_on_top_border_area_entered"]
-[connection signal="area_exited" from="TileHandler/TopBorder" to="TileHandler" method="_on_top_border_area_exited"]
+[connection signal="area_shape_exited" from="TileHandler/TilingBorder" to="TileHandler" method="_on_tiling_border_area_shape_exited"]
+[connection signal="timeout" from="TileHandler/ExitTimer" to="TileHandler" method="_on_timer_timeout"]
 [connection signal="pressed" from="DevScreen/ResetCharPos" to="DevScreen" method="_on_reset_char_pos_pressed"]
 [connection signal="toggled" from="DevScreen/WindActivate" to="DevScreen" method="_on_wind_activate_toggled"]

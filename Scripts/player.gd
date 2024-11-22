@@ -2,18 +2,23 @@ extends CharacterBody2D
 
 @export var release_speed:int = 5
 @export var movement_damper = 0.035
+@export var life_loss_rate = .05
+@export var drag_radius = 560
 
 var draggable:bool = false
 var direction := Vector2.ZERO
 
 var max_pull_pos:Vector2
-var max_pull = false
+var max_pull = Vector2.ZERO
+var max_reached:bool
 
 var initial_position:Vector2
 var dragged_position:Vector2
-var pull_length
 
-@export var life_loss_rate = .05
+var capped_drag_position:Vector2
+
+var pull_length
+var angle
 
 @onready var guide_line = get_parent().get_node("GuideLine")
 @onready var health_bar = get_parent().get_node("UI/HealthProgBar")
@@ -22,32 +27,43 @@ var pull_length
 @onready var player_sprite = $PlayerSprite
 
 func _physics_process(delta):
+	pull_length = initial_position.distance_to(dragged_position)
 	health_bar.value = health_bar.value-life_loss_rate
-	#print(health_bar.value)
-
+	
 ##Slingshot movement inputs
 	if Input.is_action_pressed("click"):
 		if draggable:
-			if !max_pull:
+			if max_reached:
+				dragged_position = get_global_mouse_position()
+				
+				angle = acos((dragged_position.x - initial_position.x)/pull_length)
+				
+				if (dragged_position.y - initial_position.y) < 0:
+					max_pull.x = drag_radius * cos(angle)
+					max_pull.y = -drag_radius * sin(angle)
+				else:	
+					max_pull.x = drag_radius * cos(angle)
+					max_pull.y = drag_radius * sin(angle)
+				
+				guide_line.points[1] = to_global(max_pull)
+			elif !max_reached:
 				dragged_position = get_global_mouse_position()
 				guide_line.points[1] = dragged_position
-			elif max_pull:
-				dragged_position = max_pull_pos
-				guide_line.points[1] = dragged_position
+
 
 	if Input.is_action_just_released("click"):
 		if draggable:
 			draggable = false
-			max_pull = false
-			guide_line.points[0] = Vector2.ZERO
-			guide_line.points[1] = Vector2.ZERO
-			max_pull_pos = Vector2.ZERO
-			direction = ((initial_position - dragged_position)*release_speed)
 			
+			if max_reached:
+				direction = ((initial_position - to_global(max_pull))*release_speed)
+			else:
+				direction = ((initial_position - dragged_position)*release_speed)
+			
+			guide_line.set_visible(false)
 			animation.stop()
 			animation.play("Rotate")
 			
-			print(health_bar.value)
 ##Movement execution
 	velocity = direction
 	direction = lerp(direction, Vector2.ZERO, movement_damper)
@@ -65,8 +81,8 @@ func _on_minimum_click_area_input_event(viewport: Node, event: InputEvent, shape
 ##Slingshot movement input 
 #Ensures that you can only start slingshot from the player
 	if Input.is_action_just_pressed("click"):
+		guide_line.set_visible(true)
 		if draggable:
-			pull_length = initial_position.distance_to(dragged_position)
 			direction = Vector2.ZERO
 			initial_position = position
 			guide_line.points[0] = initial_position
@@ -74,14 +90,10 @@ func _on_minimum_click_area_input_event(viewport: Node, event: InputEvent, shape
 			pass
 
 func _on_mouse_entered() -> void:
-#Resets Max Pull Range Variable
-	max_pull = false
+	max_reached = false
 
 func _on_mouse_exited() -> void:
-##Max Slingshot Pul Range
-#Grabs the coords of mouse when leaving the slingshot aim boundary
-	max_pull = true
-	max_pull_pos = get_global_mouse_position()
+	max_reached = true
 
 func _on_minimum_click_area_mouse_entered() -> void:
 	draggable = true
