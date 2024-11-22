@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://okwicdpcvlpt"]
+[gd_scene load_steps=8 format=3 uid="uid://okwicdpcvlpt"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_wxdwb"]
 [ext_resource type="Texture2D" uid="uid://cjjehd64mwobw" path="res://Assets/Img/solarprojexportparty.png" id="2_te82b"]
@@ -7,6 +7,43 @@
 radius = 70.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8mhot"]
+
+[sub_resource type="Animation" id="Animation_wl77j"]
+resource_name = "Rotate"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.9999, 3),
+"transitions": PackedFloat32Array(0.153893, 2.82843, 1),
+"update": 0,
+"values": [0.0, 6.28319, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_4wxv4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5xiai"]
+_data = {
+"RESET": SubResource("Animation_4wxv4"),
+"Rotate": SubResource("Animation_wl77j")
+}
 
 [node name="Player" type="CharacterBody2D"]
 input_pickable = true
@@ -17,11 +54,36 @@ script = ExtResource("1_wxdwb")
 scale = Vector2(4, 4)
 texture = ExtResource("2_te82b")
 
+[node name="Outlinesprite" type="Sprite2D" parent="PlayerSprite"]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+texture = ExtResource("2_te82b")
+offset = Vector2(0, -2)
+
+[node name="Outlinesprite1" type="Sprite2D" parent="PlayerSprite"]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+texture = ExtResource("2_te82b")
+offset = Vector2(2, 0)
+
+[node name="Outlinesprite2" type="Sprite2D" parent="PlayerSprite"]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+texture = ExtResource("2_te82b")
+offset = Vector2(0, 2)
+
+[node name="Outlinesprite3" type="Sprite2D" parent="PlayerSprite"]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+texture = ExtResource("2_te82b")
+offset = Vector2(-2, 0)
+
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 scale = Vector2(5.28, 5.28)
 shape = SubResource("CircleShape2D_iuucy")
 
 [node name="Label" type="Label" parent="PlayerCollisionShape"]
+visible = false
 offset_left = 70.6376
 offset_top = -1.84564
 offset_right = 228.638
@@ -35,6 +97,11 @@ text = "Maximum Boundary"
 scale = Vector2(13.125, 13.125)
 shape = SubResource("CircleShape2D_8mhot")
 debug_color = Color(0.689711, 0.407193, 0.746194, 0.42)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5xiai")
+}
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

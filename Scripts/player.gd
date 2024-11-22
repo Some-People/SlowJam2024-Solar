@@ -18,6 +18,9 @@ var pull_length
 @onready var guide_line = get_parent().get_node("GuideLine")
 @onready var health_bar = get_parent().get_node("UI/HealthProgBar")
 
+@onready var animation = $AnimationPlayer
+@onready var player_sprite = $PlayerSprite
+
 func _physics_process(delta):
 	health_bar.value = health_bar.value-life_loss_rate
 	#print(health_bar.value)
@@ -40,11 +43,23 @@ func _physics_process(delta):
 			guide_line.points[1] = Vector2.ZERO
 			max_pull_pos = Vector2.ZERO
 			direction = ((initial_position - dragged_position)*release_speed)
+			
+			animation.stop()
+			animation.play("Rotate")
+			
 			print(health_bar.value)
 ##Movement execution
 	velocity = direction
 	direction = lerp(direction, Vector2.ZERO, movement_damper)
 	move_and_slide()
+	
+	#round player sprite position to the nearest 4th (keep aligned to pixel grid)
+	player_sprite.position = Vector2( 
+		(position.x + 4) - (fmod(position.x + 4, 8)) - position.x,
+		(position.y + 4) - (fmod(position.y + 4, 8)) - position.y
+		)
+	##position = Vector2((position.x + 2) - (fmod(position.x + 2, 4)), (position.y + 2) - (fmod(position.y + 2, 4)))
+
 
 func _on_minimum_click_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 ##Slingshot movement input 
