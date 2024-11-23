@@ -22,4 +22,4 @@ scale = Vector2(29.5429, 29.5429)
 shape = SubResource("CircleShape2D_j8wmk")
 debug_color = Color(0.574648, 0.553305, 0.0765855, 0.42)
 
-[connection signal="area_entered" from="SunDropCollision" to="." method="_on_sun_drop_collision_area_entered"]
+[connection signal="body_shape_entered" from="SunDropCollision" to="." method="_on_sun_drop_collision_body_shape_entered"]

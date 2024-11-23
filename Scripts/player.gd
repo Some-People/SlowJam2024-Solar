@@ -35,7 +35,9 @@ func _physics_process(delta):
 	
 ##Slingshot movement inputs
 	if Input.is_action_pressed("click"):
+		
 		if draggable:
+			guide_line.points[0] = position
 			if max_reached:
 				dragged_position = get_global_mouse_position()
 				
@@ -64,6 +66,9 @@ func _physics_process(delta):
 				direction = ((initial_position - dragged_position)*release_speed)
 			
 			guide_line.set_visible(false)
+			
+			$Stretch.stop()
+			
 			animation.stop()
 			animation.play("Rotate")
 
@@ -83,6 +88,7 @@ func _on_minimum_click_area_input_event(viewport: Node, event: InputEvent, shape
 #Slingshot movement initial input 
 #Ensures that you can only start slingshot from the player model
 	if Input.is_action_just_pressed("click"):
+		$Stretch.play()
 		guide_line.set_visible(true)
 		if draggable:
 			direction = Vector2.ZERO

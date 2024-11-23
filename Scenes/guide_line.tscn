@@ -1,4 +1,10 @@
-[gd_scene format=3 uid="uid://db07jp0f3kmvu"]
+[gd_scene load_steps=2 format=3 uid="uid://db07jp0f3kmvu"]
+
+[ext_resource type="Texture2D" uid="uid://cya6pafauc8ur" path="res://Assets/Img/UI/drag_bar.png" id="1_ndooe"]
 
 [node name="GuideLine" type="Line2D"]
 points = PackedVector2Array(0, 0, 0, 0)
+texture = ExtResource("1_ndooe")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2

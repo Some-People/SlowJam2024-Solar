@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://cx5wfvlsqh3tb"]
+[gd_scene load_steps=3 format=3 uid="uid://cx5wfvlsqh3tb"]
 
+[ext_resource type="Script" path="res://Scripts/object_logic.gd" id="1_1w0mj"]
 [ext_resource type="Texture2D" uid="uid://cdt033t2cdgqg" path="res://Assets/Img/Objects/bottom-plant_02.png" id="1_4gb3v"]
 
 [node name="PlantA" type="StaticBody2D"]
+script = ExtResource("1_1w0mj")
 
 [node name="PlantSprite" type="Sprite2D" parent="."]
 scale = Vector2(8, 8)

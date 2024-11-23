@@ -22,7 +22,3 @@ func _on_timer_timeout() -> void:
 
 func _on_tiling_border_body_shape_exited(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	$ExitTimer.start()
-
-
-func _on_sun_drop_child_exiting_tree(node: Node) -> void:
-	pass # Replace with function body.
