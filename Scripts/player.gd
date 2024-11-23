@@ -14,7 +14,6 @@ var max_reached:bool
 
 var initial_position:Vector2
 var dragged_position:Vector2
-
 var capped_drag_position:Vector2
 
 var pull_length

@@ -198,7 +198,6 @@ position = Vector2(187, 447)
 position = Vector2(447, 440)
 
 [node name="ShaderLayer1" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="HorizontalDownscale" type="ColorRect" parent="ShaderLayer1"]
 material = SubResource("ShaderMaterial_s825x")
@@ -211,7 +210,6 @@ mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ShaderLayer2" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="VerticalDownscale" type="ColorRect" parent="ShaderLayer2"]
 material = SubResource("ShaderMaterial_isufk")
@@ -224,7 +222,6 @@ mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ShaderLayer3" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Quantize" type="ColorRect" parent="ShaderLayer3"]
 visible = false
@@ -266,7 +263,6 @@ tile_set = SubResource("TileSet_bwknh")
 script = ExtResource("3_n7g6t")
 
 [node name="PlayerCamera" type="Camera2D" parent="CameraContainer"]
-zoom = Vector2(0.4, 0.4)
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
