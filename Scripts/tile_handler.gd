@@ -7,9 +7,6 @@ var player_position:Vector2
 var border_check_y = 620
 var border_check_x = 1090
 
-func _on_tiling_border_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
-	$ExitTimer.start()
-
 func _on_timer_timeout() -> void:
 	current_position = global_position
 	player_position = player.global_position
@@ -21,3 +18,11 @@ func _on_timer_timeout() -> void:
 
 	position.y = position.y + (1240 * int(bot)) - (1240 * int(top))
 	position.x = position.x + (2208 * int(right)) - (2208 * int(left))
+
+
+func _on_tiling_border_body_shape_exited(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+	$ExitTimer.start()
+
+
+func _on_sun_drop_child_exiting_tree(node: Node) -> void:
+	pass # Replace with function body.

@@ -1,11 +1,10 @@
 extends Node2D
-#Handles spawning of sun drops around player
 
-# Called when the node enters the scene tree for the first time.
+var game_level = 0
+
 func _ready():
-	pass # Replace with function body.
+	game_level = 1
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	pass

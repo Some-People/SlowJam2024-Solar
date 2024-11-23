@@ -6,7 +6,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_iuucy"]
 radius = 70.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_8mhot"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_rw55n"]
+radius = 136.18
 
 [sub_resource type="Animation" id="Animation_4wxv4"]
 length = 0.001
@@ -78,35 +79,24 @@ z_index = -1
 texture = ExtResource("2_te82b")
 offset = Vector2(-2, 0)
 
-[node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
+[node name="MaxPullRadius" type="Area2D" parent="."]
+
+[node name="MaxPull" type="CollisionShape2D" parent="MaxPullRadius"]
 scale = Vector2(5.28, 5.28)
 shape = SubResource("CircleShape2D_iuucy")
 
-[node name="Label" type="Label" parent="PlayerCollisionShape"]
-visible = false
-offset_left = 70.6376
-offset_top = -1.84564
-offset_right = 228.638
-offset_bottom = 21.1544
-scale = Vector2(0.157442, 0.157442)
-text = "Maximum Boundary"
-
-[node name="MinimumClickArea" type="Area2D" parent="." groups=["Player"]]
-collision_layer = 3
-collision_mask = 3
-
-[node name="MinimumClickShape" type="CollisionShape2D" parent="MinimumClickArea"]
-scale = Vector2(13.125, 13.125)
-shape = SubResource("CircleShape2D_8mhot")
-debug_color = Color(0.278431, 1, 0, 0.419608)
+[node name="MinimumClickArea" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rw55n")
+debug_color = Color(0.0668359, 0.649652, 1.92523e-07, 0.42)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../PlayerSprite")
 libraries = {
 "": SubResource("AnimationLibrary_5xiai")
 }
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
-[connection signal="input_event" from="MinimumClickArea" to="." method="_on_minimum_click_area_input_event"]
-[connection signal="mouse_entered" from="MinimumClickArea" to="." method="_on_minimum_click_area_mouse_entered"]
-[connection signal="mouse_exited" from="MinimumClickArea" to="." method="_on_minimum_click_area_mouse_exited"]
+[connection signal="input_event" from="." to="." method="_on_minimum_click_area_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_minimum_click_area_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_minimum_click_area_mouse_exited"]
+[connection signal="mouse_entered" from="MaxPullRadius" to="." method="_on_max_pull_radius_mouse_entered"]
+[connection signal="mouse_exited" from="MaxPullRadius" to="." method="_on_max_pull_radius_mouse_exited"]

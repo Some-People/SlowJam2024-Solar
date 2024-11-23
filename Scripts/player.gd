@@ -21,13 +21,17 @@ var angle
 
 @onready var guide_line = get_parent().get_node("GuideLine")
 @onready var health_bar = get_parent().get_node("UI/HealthProgBar")
+@onready var health_num = get_parent().get_node("UI/HealthNumber")
 
 @onready var animation = $AnimationPlayer
 @onready var player_sprite = $PlayerSprite
 
 func _physics_process(delta):
 	pull_length = initial_position.distance_to(dragged_position)
-	health_bar.value = health_bar.value-life_loss_rate
+
+#Health
+	health_bar.value -= life_loss_rate
+	health_num.value -= life_loss_rate
 	
 ##Slingshot movement inputs
 	if Input.is_action_pressed("click"):
@@ -62,12 +66,12 @@ func _physics_process(delta):
 			guide_line.set_visible(false)
 			animation.stop()
 			animation.play("Rotate")
-			
+
 ##Movement execution
 	velocity = direction
 	direction = lerp(direction, Vector2.ZERO, movement_damper)
 	move_and_slide()
-	
+
 	#round player sprite position to the nearest 4th (keep aligned to pixel grid)
 	player_sprite.position = Vector2( 
 		(position.x + 4) - (fmod(position.x + 4, 8)) - position.x,
@@ -75,10 +79,9 @@ func _physics_process(delta):
 		)
 	##position = Vector2((position.x + 2) - (fmod(position.x + 2, 4)), (position.y + 2) - (fmod(position.y + 2, 4)))
 
-
 func _on_minimum_click_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-##Slingshot movement input 
-#Ensures that you can only start slingshot from the player
+#Slingshot movement initial input 
+#Ensures that you can only start slingshot from the player model
 	if Input.is_action_just_pressed("click"):
 		guide_line.set_visible(true)
 		if draggable:
@@ -88,15 +91,16 @@ func _on_minimum_click_area_input_event(viewport: Node, event: InputEvent, shape
 		elif !draggable:
 			pass
 
-func _on_mouse_entered() -> void:
-	max_reached = false
-
-func _on_mouse_exited() -> void:
-	max_reached = true
-
+#Flags to make properly start and end capping capabilities
 func _on_minimum_click_area_mouse_entered() -> void:
 	draggable = true
 
 func _on_minimum_click_area_mouse_exited() -> void:
 	if !Input.is_action_pressed("click"):
 		draggable = false
+
+func _on_max_pull_radius_mouse_entered() -> void:
+	max_reached = false
+
+func _on_max_pull_radius_mouse_exited() -> void:
+	max_reached = true

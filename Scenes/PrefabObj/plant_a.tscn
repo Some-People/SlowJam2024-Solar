@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx5wfvlsqh3tb"]
+
+[ext_resource type="Texture2D" uid="uid://cdt033t2cdgqg" path="res://Assets/Img/Objects/bottom-plant_02.png" id="1_4gb3v"]
+
+[node name="PlantA" type="StaticBody2D"]
+
+[node name="PlantSprite" type="Sprite2D" parent="."]
+scale = Vector2(8, 8)
+texture = ExtResource("1_4gb3v")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(8, 8)
+polygon = PackedVector2Array(9.75, -10.5, 8.5, -18.875, 4.875, -21.125, -5.625, -19.5, -10.875, -21.5, -16.5, -22, -22.125, -14.5, -20.75, -6.75, -23.125, -2.625, -23.875, 8, -18, 15.625, -9.75, 19.875, 2.25, 19.375, 6.75, 22.125, 15.25, 22.125, 20.625, 16.875, 20.875, 9.125, 24, 5.625, 22.5, -2.625, 13.25, -3.875, 8.875, -8.5)

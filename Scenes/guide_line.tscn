@@ -1,7 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://db07jp0f3kmvu"]
-
-[ext_resource type="Script" path="res://Scripts/guide_line.gd" id="1_csqd7"]
+[gd_scene format=3 uid="uid://db07jp0f3kmvu"]
 
 [node name="GuideLine" type="Line2D"]
 points = PackedVector2Array(0, 0, 0, 0)
-script = ExtResource("1_csqd7")

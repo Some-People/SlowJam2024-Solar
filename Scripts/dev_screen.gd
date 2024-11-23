@@ -15,24 +15,21 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
 	player_velocity = str(player.velocity)
 	is_draggable = str(player.draggable)
 	$Velocity.text = player_velocity
 	$Draggable.text = is_draggable
 	
 	if wind_toggle:
-		player.direction.x += wind_strength
+		player.direction.x -= wind_strength
 	elif !wind_toggle:
 		player.direction.x
 	pass
-
 
 func _on_reset_char_pos_pressed() -> void:
 	player.position = Vector2.ZERO
 	player.velocity = Vector2.ZERO
 	pass # Replace with function body.
-
 
 func _on_wind_activate_toggled(toggled_on):
 	if !wind_toggle:
