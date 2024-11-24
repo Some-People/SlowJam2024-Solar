@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://dsqwaapklf4xb"]
+[gd_scene load_steps=34 format=4 uid="uid://dsqwaapklf4xb"]
 
 [ext_resource type="Script" path="res://Scripts/tile_handler.gd" id="1_4u1rf"]
 [ext_resource type="PackedScene" uid="uid://okwicdpcvlpt" path="res://Scenes/Player.tscn" id="1_myq71"]
@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://cn8wrnyq883u0" path="res://Assets/Img/BG.png" id="3_k7iji"]
 [ext_resource type="Script" path="res://Scripts/player_camera.gd" id="3_n7g6t"]
 [ext_resource type="AudioStream" uid="uid://dvq0w6fsqt046" path="res://Assets/Sound/stage2.mp3" id="3_xexcw"]
-[ext_resource type="AudioStream" uid="uid://d3v757xagy527" path="res://Assets/Sound/stage3.mp3" id="4_h0vmv"]
 [ext_resource type="Script" path="res://Scripts/dev_screen.gd" id="5_2bnsw"]
 [ext_resource type="Texture2D" uid="uid://b67rkrhabv1in" path="res://Assets/Img/UI/SERA_HealthBar-back.png" id="8_4oxcr"]
 [ext_resource type="Script" path="res://Scripts/sun_drop_handler.gd" id="8_jr54t"]
@@ -23,14 +22,10 @@
 [ext_resource type="Texture2D" uid="uid://11ywkr3w1pmy" path="res://Assets/Screenshot 2024-11-17 182659.png" id="13_nx2tv"]
 [ext_resource type="Texture2D" uid="uid://bgvw7nbndubis" path="res://Assets/Img/solarprojbg.png" id="14_yue5p"]
 
-[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_ypphw"]
-stream_count = 3
-stream_0/stream = ExtResource("1_nbjks")
-stream_0/volume = 0.0
-stream_1/stream = ExtResource("3_xexcw")
-stream_1/volume = -60.0
-stream_2/stream = ExtResource("4_h0vmv")
-stream_2/volume = -60.0
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_su5i4"]
+stream_count = 2
+stream_0 = ExtResource("1_nbjks")
+stream_1 = ExtResource("3_xexcw")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ed05f"]
 size = Vector2(19.8822, 19.7835)
@@ -86,10 +81,9 @@ script = ExtResource("1_o3xk0")
 
 [node name="Music" type="Node" parent="."]
 
-[node name="BackgroundMusic" type="AudioStreamPlayer" parent="Music"]
-stream = SubResource("AudioStreamSynchronized_ypphw")
+[node name="stage 1" type="AudioStreamPlayer" parent="Music"]
+stream = SubResource("AudioStreamPlaylist_su5i4")
 volume_db = -10.0
-autoplay = true
 
 [node name="TileHandler" type="Node2D" parent="."]
 script = ExtResource("1_4u1rf")

@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @onready var player = get_parent().get_node("Player")
 
+
 @export var wind_strength = -5
 var player_velocity
 var is_draggable
@@ -27,9 +28,9 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_reset_char_pos_pressed() -> void:
-	player.position = Vector2.ZERO
-	player.velocity = Vector2.ZERO
-	pass # Replace with function body.
+	get_parent().current_level += 1
+	print(get_parent().current_level)
+	get_parent().level_up = true
 
 func _on_wind_activate_toggled(toggled_on):
 	if !wind_toggle:
