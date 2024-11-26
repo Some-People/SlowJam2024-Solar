@@ -1,6 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://b88a648tgmncv"]
+[gd_scene load_steps=4 format=3 uid="uid://b88a648tgmncv"]
 
 [ext_resource type="Script" path="res://Scripts/object_logic.gd" id="1_ud5k4"]
+[ext_resource type="Texture2D" uid="uid://ca27tvlf4xnso" path="res://Assets/Img/Objects/bottom-plant_01.png" id="2_4k0i5"]
+[ext_resource type="Texture2D" uid="uid://cxdqwmydtt6t1" path="res://Assets/Img/Objects/top-plant_01.png" id="3_s6x40"]
 
-[node name="PlantB" type="Node2D"]
+[node name="PlantB" type="StaticBody2D"]
 script = ExtResource("1_ud5k4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(8, 8)
+texture = ExtResource("2_4k0i5")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(47, -173)
+scale = Vector2(8, 8)
+texture = ExtResource("3_s6x40")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(8, 8)
+polygon = PackedVector2Array(5.875, -28.875, -3.75, -29.375, -6.375, -24.875, -17.875, -25.875, -20.75, -29.875, -25.375, -29, -24, -15.125, -26.25, -10.5, -27, -3.75, -35.25, 6.25, -35.125, 10.625, -21.375, 10.75, -12.875, 18.5, -4.75, 29.5, 0.5, 29.875, 15, 12.25, 19.5, 11, 35.375, 1.875, 35.375, -1.125, 33, -4.875, 28.875, -7.25)

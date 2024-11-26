@@ -2,25 +2,22 @@ extends CanvasLayer
 
 @onready var player = get_parent().get_node("Player")
 
-
 @export var wind_strength = -5
 var player_velocity
 var is_draggable
 var wind_toggle:bool = false
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	$Velocity.text = "N/A"
 	$Draggable.text = "N/A"
-	pass # Replace with function body.
+	pass
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	player_velocity = str(player.velocity)
 	is_draggable = str(player.draggable)
 	$Velocity.text = player_velocity
 	$Draggable.text = is_draggable
-	
+
 	if wind_toggle:
 		player.direction.x -= wind_strength
 	elif !wind_toggle:
@@ -37,4 +34,3 @@ func _on_wind_activate_toggled(toggled_on):
 		wind_toggle = true
 	elif wind_toggle:
 		wind_toggle = false
-	pass # Replace with function body.

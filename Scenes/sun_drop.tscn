@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_j8wmk"]
 
 [node name="SunDrop" type="Node2D"]
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.3, 0.3)
 script = ExtResource("1_0ojvs")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
+const PUSHFORCE = 10
 @export var release_speed:int = 5
 @export var movement_damper = 0.035
-@export var life_loss_rate = .05
 @export var drag_radius = 560
 
 var draggable:bool = false
@@ -20,18 +20,22 @@ var pull_length
 var angle
 
 @onready var guide_line = get_parent().get_node("GuideLine")
-@onready var health_bar = get_parent().get_node("UI/HealthProgBar")
-@onready var health_num = get_parent().get_node("UI/HealthNumber")
+
 
 @onready var animation = $AnimationPlayer
 @onready var player_sprite = $PlayerSprite
 
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+	set_visible(false)
+
 func _physics_process(delta):
 	pull_length = initial_position.distance_to(dragged_position)
-
-#Health
-	health_bar.value -= life_loss_rate
-	health_num.value -= life_loss_rate
+	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_collider() is RigidBody2D:
+			collision.get_collider().apply_central_impulse(-collision.get_normal()*PUSHFORCE)
 	
 ##Slingshot movement inputs
 	if Input.is_action_pressed("click"):
@@ -55,7 +59,6 @@ func _physics_process(delta):
 				dragged_position = get_global_mouse_position()
 				guide_line.points[1] = dragged_position
 
-
 	if Input.is_action_just_released("click"):
 		if draggable:
 			draggable = false
@@ -70,6 +73,7 @@ func _physics_process(delta):
 			$Stretch.stop()
 			
 			animation.stop()
+			#$Glide.play()
 			animation.play("Rotate")
 
 ##Movement execution
@@ -97,7 +101,7 @@ func _on_minimum_click_area_input_event(viewport: Node, event: InputEvent, shape
 		elif !draggable:
 			pass
 
-#Flags to make properly start and end capping capabilities
+#Flags to properly start and end drag capping capabilities
 func _on_minimum_click_area_mouse_entered() -> void:
 	draggable = true
 

@@ -3,16 +3,22 @@ extends Node2D
 @onready var player = get_parent().get_node("Player")
 @onready var outside_camera_path = get_parent().get_node("Player/SmallPath/PathFollow2D")
 @onready var ObjContainer = $container
+@onready var wind_particles = get_parent().get_node("CameraContainer/Wind")
 
 @export var max_obj_count = 20
 @export var despawn_distance = 3000
-@export var wind_strength = 5
+@export var wind_strength = 0
 
 var object
 var objectInstance
 var rng = RandomNumberGenerator.new()
 
 var wind_toggle:bool = false
+var min_wind_countdown_timeout = 5
+var max_wind_countdown_timeout = 20
+
+var min_wind_duration_timer_timeout = 5
+var max_wind_duration_timer_timeout = 15
 
 func _ready() -> void:
 	randomize()
@@ -21,9 +27,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if wind_toggle:
 		player.direction.x -= wind_strength
+		
 	elif !wind_toggle:
 		player.direction.x
-	pass
 
 func _on_spawn_timer_timeout() -> void:
 	rng.randomize()
@@ -31,7 +37,7 @@ func _on_spawn_timer_timeout() -> void:
 	if ObjContainer.get_child_count() < max_obj_count:
 		var rngSpawn = RandomNumberGenerator.new()
 		rngSpawn.randomize()
-		var spawnPicker = rngSpawn.randi_range(1,3)
+		var spawnPicker = rngSpawn.randi_range(1,5)
 		
 		match spawnPicker:
 			1:
@@ -40,31 +46,33 @@ func _on_spawn_timer_timeout() -> void:
 				object = preload("res://Scenes/PrefabObj/rock_a.tscn")
 			3:
 				object = preload("res://Scenes/PrefabObj/rock_b.tscn")
+			4:
+				object = preload("res://Scenes/PrefabObj/plant_b.tscn")
+			5:
+				object = preload("res://Scenes/PrefabObj/rock_c.tscn")
 				
 		outside_camera_path.progress = rng.randi_range(0,23000)
 		objectInstance = object.instantiate()
 		objectInstance.position = outside_camera_path.global_position
+		objectInstance.rotation = rng.randi_range(0,360)
 		ObjContainer.add_child(objectInstance)
-	elif ObjContainer.get_child_count() == 0:
-		print("No more objects")	
 	else:
-		print(max_obj_count, "objects!")
-
+		pass
 
 func _on_wind_countdown_timeout() -> void:
 	rng.randomize()
-	
-	$WindCountdown.wait_time = rng.randi_range(5,20)
+	$WindCountdown.wait_time = rng.randi_range(min_wind_countdown_timeout,max_wind_countdown_timeout)
 	wind_toggle = true
+	wind_particles.emitting = true
+	$WindAudio.play()
 	print("Wind blowing!")
 	$WindDurationTimer.start()
-	pass # Replace with function body.
-
 
 func _on_wind_duration_timer_timeout() -> void:
 	rng.randomize()
 	wind_toggle = false
-	$WindDurationTimer.wait_time = rng.randi_range(5,20)
+	wind_particles.emitting = false
+	$WindAudio.stop()
+	$WindDurationTimer.wait_time = rng.randi_range(min_wind_duration_timer_timeout,max_wind_duration_timer_timeout)
 	print("Wind stopped. Blows again in: ", $WindCountdown.wait_time)
 	$WindCountdown.start()
-	pass # Replace with function body.

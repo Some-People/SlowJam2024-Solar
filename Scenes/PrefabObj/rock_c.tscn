@@ -1,6 +1,14 @@
 [gd_scene load_steps=2 format=3 uid="uid://ff30acla73wy"]
 
-[ext_resource type="Script" path="res://Scripts/object_logic.gd" id="1_isge6"]
+[ext_resource type="Texture2D" uid="uid://djiciw01itrpd" path="res://Assets/Img/Objects/rock_03.png" id="2_q5pha"]
 
-[node name="RockC" type="Node2D"]
-script = ExtResource("1_isge6")
+[node name="RockC" type="CharacterBody2D"]
+motion_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(8, 8)
+texture = ExtResource("2_q5pha")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(8, 8)
+polygon = PackedVector2Array(-8.75, 11.25, 1.125, 12.125, 9.75, 4.125, 10.125, 0, -1.125, -11.75, -10, -11.25)

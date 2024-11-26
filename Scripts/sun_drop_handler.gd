@@ -5,6 +5,7 @@ extends Node2D
 @onready var sun_path = get_parent().get_node("Player/SolarSpawnPath/PathFollow2D")
 @onready var sunObj = preload("res://Scenes/sun_drop.tscn")
 
+var heal = 6
 var max_sun_count = 50
 
 func _on_sun_timer_timeout() -> void:
@@ -12,7 +13,7 @@ func _on_sun_timer_timeout() -> void:
 	var sunInstance
 
 	if SunContainer.get_child_count() < max_sun_count:
-		sun_path.progress = rng.randi_range(0,9000)
+		sun_path.progress = rng.randi_range(0,35000)
 		sunInstance = sunObj.instantiate()
 		sunInstance.position = sun_path.global_position
 		SunContainer.add_child(sunInstance)

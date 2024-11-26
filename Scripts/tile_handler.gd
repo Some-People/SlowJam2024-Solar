@@ -7,6 +7,13 @@ var player_position:Vector2
 var border_check_y = 620
 var border_check_x = 1090
 
+func _physics_process(delta: float) -> void:
+	if global_position.distance_to(player.global_position)>3000:
+		global_position = player.global_position
+		pass
+
+
+
 func _on_timer_timeout() -> void:
 	current_position = global_position
 	player_position = player.global_position
