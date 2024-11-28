@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 @onready var player = get_parent().get_node("Player")
+@onready var health = get_parent().get_node("UI/HealthProgBar")
 
 @export var wind_strength = -5
 var player_velocity
@@ -25,9 +26,10 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_reset_char_pos_pressed() -> void:
-	get_parent().current_level += 1
-	print(get_parent().current_level)
-	get_parent().level_up = true
+	health.value += 30
+	#get_parent().current_level += 1
+	#print(get_parent().current_level)
+	#get_parent().level_up = true
 
 func _on_wind_activate_toggled(toggled_on):
 	if !wind_toggle:

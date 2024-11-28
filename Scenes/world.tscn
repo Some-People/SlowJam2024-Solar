@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=4 uid="uid://dsqwaapklf4xb"]
+[gd_scene load_steps=56 format=4 uid="uid://dsqwaapklf4xb"]
 
 [ext_resource type="Script" path="res://Scripts/tile_handler.gd" id="1_4u1rf"]
 [ext_resource type="PackedScene" uid="uid://okwicdpcvlpt" path="res://Scenes/Player.tscn" id="1_myq71"]
@@ -14,13 +14,14 @@
 [ext_resource type="Script" path="res://Scripts/dev_screen.gd" id="5_2bnsw"]
 [ext_resource type="AudioStream" uid="uid://cjokrsqc42nl6" path="res://Assets/Sound/stage4.mp3" id="5_cv8y5"]
 [ext_resource type="AudioStream" uid="uid://b0oiowunier4t" path="res://Assets/Sound/stage5.mp3" id="6_p7fx0"]
+[ext_resource type="AudioStream" uid="uid://bhlx5kd8wkia3" path="res://Assets/Sound/stage6.mp3" id="7_gd17l"]
 [ext_resource type="Texture2D" uid="uid://b67rkrhabv1in" path="res://Assets/Img/UI/SERA_HealthBar-back.png" id="8_4oxcr"]
 [ext_resource type="Script" path="res://Scripts/sun_drop_handler.gd" id="8_jr54t"]
 [ext_resource type="Shader" path="res://Assets/Shaders/HorizontalDownscalePass.gdshader" id="9_k1oyc"]
 [ext_resource type="AudioStream" uid="uid://c50y48yv6veg" path="res://Assets/Sound/growingSFX.mp3" id="9_w3eis"]
 [ext_resource type="Texture2D" uid="uid://c3dlxmcwcb5oq" path="res://Assets/Img/UI/SERA_HealthBar.png" id="9_yeega"]
 [ext_resource type="Shader" path="res://Assets/Shaders/VerticalDownscalePass.gdshader" id="10_6r0cn"]
-[ext_resource type="AudioStream" uid="uid://ny2851xx0hph" path="res://Assets/Sound/horror-rumble-winds-253834.mp3" id="11_0asjs"]
+[ext_resource type="AudioStream" uid="uid://ny2851xx0hph" path="res://Assets/Sound/wind.mp3" id="11_0asjs"]
 [ext_resource type="Shader" path="res://Assets/Shaders/QuantizeColorToPalette.gdshader" id="11_aoq4g"]
 [ext_resource type="Texture2D" uid="uid://ttbhnns45o74" path="res://Assets/Shaders/Palettes/testyo.png" id="11_awnev"]
 [ext_resource type="Texture2D" uid="uid://11ywkr3w1pmy" path="res://Assets/Screenshot 2024-11-17 182659.png" id="13_nx2tv"]
@@ -33,7 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://44fk3mtfbe8w" path="res://Assets/Img/UI/wind.png" id="29_rkaru"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_ypphw"]
-stream_count = 5
+stream_count = 6
 stream_0/stream = ExtResource("1_nbjks")
 stream_0/volume = 0.0
 stream_1/stream = ExtResource("3_xexcw")
@@ -44,6 +45,8 @@ stream_3/stream = ExtResource("5_cv8y5")
 stream_3/volume = -60.0
 stream_4/stream = ExtResource("6_p7fx0")
 stream_4/volume = -60.0
+stream_5/stream = ExtResource("7_gd17l")
+stream_5/volume = -60.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ed05f"]
 size = Vector2(19.8822, 19.7835)
@@ -270,6 +273,8 @@ autostart = true
 
 [node name="WindAudio" type="AudioStreamPlayer" parent="ObstacleContainer"]
 stream = ExtResource("11_0asjs")
+volume_db = -20.0
+autoplay = true
 
 [node name="SunDropContainer" type="Node2D" parent="."]
 script = ExtResource("8_jr54t")
@@ -431,7 +436,6 @@ tile_set = SubResource("TileSet_bwknh")
 
 [node name="DevScreen" type="CanvasLayer" parent="."]
 layer = 2
-visible = false
 script = ExtResource("5_2bnsw")
 wind_strength = 5
 
@@ -441,7 +445,7 @@ offset_top = 20.0
 offset_right = 246.0
 offset_bottom = 51.0
 scale = Vector2(0.88059, 0.88059)
-text = "level +1"
+text = "+40 Exp Bar"
 
 [node name="Velocity" type="Label" parent="DevScreen"]
 offset_left = 103.0

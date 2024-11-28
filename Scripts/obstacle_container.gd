@@ -20,16 +20,30 @@ var max_wind_countdown_timeout = 20
 var min_wind_duration_timer_timeout = 5
 var max_wind_duration_timer_timeout = 15
 
+var wind_play = false
+
 func _ready() -> void:
 	randomize()
 	object = preload("res://Scenes/PrefabObj/rock_a.tscn")
+	$WindAudio.volume_db = -60
 	
 func _physics_process(delta: float) -> void:
+	#print($WindAudio.volume_db)
+	
 	if wind_toggle:
 		player.direction.x -= wind_strength
-		
 	elif !wind_toggle:
 		player.direction.x
+		
+	if wind_play:
+		if $WindAudio.volume_db != -20:
+			$WindAudio.volume_db += .5
+	elif !wind_play:
+		if $WindAudio.volume_db != -60:
+			$WindAudio.volume_db -= .5
+			if $WindAudio.volume_db == -60:
+				$WindAudio.stop()
+				$WindAudio.play()
 
 func _on_spawn_timer_timeout() -> void:
 	rng.randomize()
@@ -64,7 +78,7 @@ func _on_wind_countdown_timeout() -> void:
 	$WindCountdown.wait_time = rng.randi_range(min_wind_countdown_timeout,max_wind_countdown_timeout)
 	wind_toggle = true
 	wind_particles.emitting = true
-	$WindAudio.play()
+	wind_play = true
 	print("Wind blowing!")
 	$WindDurationTimer.start()
 
@@ -72,7 +86,7 @@ func _on_wind_duration_timer_timeout() -> void:
 	rng.randomize()
 	wind_toggle = false
 	wind_particles.emitting = false
-	$WindAudio.stop()
+	wind_play = false
 	$WindDurationTimer.wait_time = rng.randi_range(min_wind_duration_timer_timeout,max_wind_duration_timer_timeout)
 	print("Wind stopped. Blows again in: ", $WindCountdown.wait_time)
 	$WindCountdown.start()
